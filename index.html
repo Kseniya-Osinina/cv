@@ -131,12 +131,55 @@
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+		window.Clipboard = (function(window, document, navigator) {
+			var textArea,
+				copy;
+
+			function isOS() {
+				return navigator.userAgent.match(/ipad|iphone/i);
+			}
+
+			function createTextArea(text) {
+				textArea = document.createElement('textArea');
+				textArea.value = text;
+				document.body.appendChild(textArea);
+			}
+
+			function selectText() {
+				var range,
+					selection;
+
+				if (isOS()) {
+					range = document.createRange();
+					range.selectNodeContents(textArea);
+					selection = window.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+					textArea.setSelectionRange(0, 999999);
+				} else {
+					textArea.select();
+				}
+			}
+
+			function copyToClipboard() {        
+				document.execCommand('copy');
+				document.body.removeChild(textArea);
+			}
+
+			copy = function(text) {
+				createTextArea(text);
+				selectText();
+				copyToClipboard();
+			};
+
+			return {
+				copy: copy
+			};
+		})(window, document, navigator);
+		
 		function copyFn(id, inp, tt) {
 		  var copyText = document.getElementById(inp);
-		  $('#'+inp).show();
-		  copyText.select();
-		  document.execCommand("copy");
-		  $('#'+inp).hide();
+		  Clipboard.copy(copyText.value);
 		  var previous = $('#'+id).attr("data-original-title");
 		  $('#'+id).attr('data-original-title','Скопировано: '+copyText.value);
 		  $('#'+tt).tooltip('hide');
