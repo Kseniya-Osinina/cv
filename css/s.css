@@ -93,4 +93,31 @@ footer{padding-top: 69px;}
     background-image: url(../img/icon_copy.svg);
     background-size: 100%;
 }
+
+#price img {
+	margin: 25px 0;
+}
+
+#price {
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+#price a, footer a {
+	color: #000 !important;
+	font-size: 18px;
+}
+#price a:visited, footer a:visited,
+#price a:active, footer a:active {
+	color: #000 !important;
+}
+#price iframe {
+	height: 400px;
+	width: 95%;
+	resize: both;
+}
+#price span {
+	display: block;
+	color: #ccc;
+}
 #mail-input, #phone-input { position:absolute; top:-40px; }
